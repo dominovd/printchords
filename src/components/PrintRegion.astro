@@ -1,0 +1,41 @@
+---
+/**
+ * Printable sheets. Rendered from the same fretboardGroup() as the on-screen
+ * diagrams, inlined as vector SVG so printing does not depend on an image
+ * download or on JavaScript. Hidden on screen, shown by the print stylesheet.
+ */
+const { sheets } = Astro.props;
+---
+
+<div class="print-region">
+  {sheets.map((sheet) => (
+    <div class="print-sheet" data-sheet={sheet.id} set:html={sheet.svg} />
+  ))}
+</div>
+
+<script>
+  // Print buttons. Without JS the buttons do nothing and the browser's own
+  // print command still produces every sheet, so nothing is lost.
+  document.addEventListener('click', (event) => {
+    const trigger = event.target instanceof Element ? event.target.closest('[data-print]') : null;
+    if (!trigger) return;
+    const target = trigger.getAttribute('data-print');
+    const root = document.documentElement;
+    const sheets = document.querySelectorAll('.print-sheet');
+    sheets.forEach((sheet) => sheet.classList.remove('is-print-target'));
+    if (target && target !== 'all') {
+      const chosen = document.querySelector(`.print-sheet[data-sheet="${target}"]`);
+      if (chosen) {
+        chosen.classList.add('is-print-target');
+        root.classList.add('print-scope-single');
+      }
+    } else {
+      root.classList.remove('print-scope-single');
+    }
+    window.print();
+  });
+
+  window.addEventListener('afterprint', () => {
+    document.documentElement.classList.remove('print-scope-single');
+  });
+</script>

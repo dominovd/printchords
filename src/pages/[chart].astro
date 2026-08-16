@@ -1,0 +1,15 @@
+---
+import ChartPage from '../components/ChartPage.astro';
+import { charts, chartUrl } from '../data/charts.mjs';
+
+export function getStaticPaths() {
+  // The chart on the root is built by index.astro instead.
+  return charts
+    .filter((chart) => chartUrl(chart) !== '/')
+    .map((chart) => ({ params: { chart: chart.id }, props: { chart } }));
+}
+
+const { chart } = Astro.props;
+---
+
+<ChartPage chart={chart} />

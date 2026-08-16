@@ -1,0 +1,165 @@
+---
+import Base from '../../layouts/Base.astro';
+import KeySwitcher from '../../components/KeySwitcher.astro';
+import ScaleKeyScript from '../../components/ScaleKeyScript.astro';
+import PrintRegion from '../../components/PrintRegion.astro';
+import Faq from '../../components/Faq.astro';
+import { pentatonicPage } from '../../data/scale-pages.mjs';
+import {
+  DEFAULT_KEY, KEYS, PENTATONIC_BOXES, getKey, getScale, neckPositions, pentatonicBox, scaleNotes,
+} from '../../lib/scales.mjs';
+import { FULL_NECK, boxesImagePath, boxesSheetSvg } from '../../lib/scale-sheets.mjs';
+import { neckSvg } from '../../lib/diagram.mjs';
+import { SITE, CHEAPEST_ENTRIES, absolute } from '../../lib/site.mjs';
+import { pageSchema } from '../../lib/schema.mjs';
+import { pdfPath, downloadName } from '../../lib/assets.mjs';
+
+const key = getKey(DEFAULT_KEY);
+const scale = getScale('minor-pentatonic');
+const url = pentatonicPage.url;
+const heroImage = boxesImagePath(key);
+const boxesAlt = `${key.name} minor pentatonic scale chart, all five box shapes, printable`;
+
+const pinHref = (image, description) =>
+  'https://pinterest.com/pin/create/button/?url=' + encodeURIComponent(absolute(url)) +
+  '&media=' + encodeURIComponent(absolute(image)) +
+  '&description=' + encodeURIComponent(`${description}. Free from ${SITE.domain}`);
+
+const schema = pageSchema({
+  name: pentatonicPage.h1,
+  url,
+  description: pentatonicPage.metaDescription,
+  image: heroImage,
+  imageAlt: boxesAlt,
+  breadcrumb: [
+    { name: 'Home', url: '/' },
+    { name: 'Guitar Scales Chart', url: '/guitar-scales/' },
+    { name: pentatonicPage.h1, url },
+  ],
+  faq: pentatonicPage.faq,
+});
+---
+
+<Base
+  title={pentatonicPage.metaTitle}
+  description={pentatonicPage.metaDescription}
+  canonical={url}
+  ogImage={heroImage}
+  ogImageAlt={boxesAlt}
+  schema={schema}
+>
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a><span>›</span>
+    <a href="/guitar-scales/">Guitar Scales Chart</a><span>›</span>
+    <span aria-current="page">{pentatonicPage.h1}</span>
+  </nav>
+
+  <h1>{pentatonicPage.h1}</h1>
+  <p class="lead">{pentatonicPage.lead}</p>
+
+  <KeySwitcher current={key.id} />
+
+  <section class="section">
+    <h2 class="section-title"><span data-key-name>{key.name}</span> minor pentatonic across the neck</h2>
+    <p class="section-lead">Every note of the scale from the nut to the twelfth fret. The five boxes below are slices of this.</p>
+    <div class="scale-layout">
+      <div>
+        <div class="neck-wrap" data-neck data-scale={scale.id} data-from={FULL_NECK.fromFret} data-to={FULL_NECK.toFret}
+          set:html={neckSvg(neckPositions(scale, key, FULL_NECK), FULL_NECK, {
+            label: `${key.name} minor pentatonic, frets 0 to 12`,
+          })}
+        />
+        <div class="scale-facts">
+          <span><b>Notes</b> <span data-notes={scale.id}>{scaleNotes(scale, key).join(' · ')}</span></span>
+          <span><b>Best for</b> {scale.bestFor}</span>
+        </div>
+        <div class="scale-actions">
+          <button class="btn btn--primary" type="button" data-print="pentatonic-boxes">Print all five boxes</button>
+          <a class="btn" href={pdfPath(boxesImagePath(key))} data-scale-pdf="pentatonic-boxes"
+            download={downloadName(pdfPath(boxesImagePath(key)))}>Download PDF</a>
+          <a class="btn" href={boxesImagePath(key)} data-scale-download="pentatonic-boxes" download>Download PNG</a>
+          <a class="btn btn--pin" rel="nofollow noopener" target="_blank"
+            data-scale-pin="pentatonic-boxes"
+            href={pinHref(boxesImagePath(key), boxesAlt)}
+          >Save to Pinterest</a>
+          <p class="action-note">Free. No sign-up. A4 and US Letter.</p>
+        </div>
+      </div>
+      <aside class="scale-print">
+        <div class="artifact-head">
+          <strong>Printable sheet</strong>
+          <span class="size">PNG · 1000×1500</span>
+        </div>
+        <img
+          class="print-card"
+          data-scale-img="pentatonic-boxes"
+          src={boxesImagePath(key)}
+          width="1000"
+          height="1500"
+          alt={boxesAlt}
+          decoding="async"
+        />
+        <p class="artifact-note">All five boxes on one page, with the frets you actually play.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">The five boxes</h2>
+    <p class="section-lead">Each box is the same five notes in a different place. The overlaps are what let you cross between them.</p>
+    <div class="box-grid">
+      {PENTATONIC_BOXES.map((box, index) => {
+        const { positions, notes, window: draw } = pentatonicBox(key, index);
+        return (
+          <article class="box-card">
+            <h3>{box.name}</h3>
+            <p class="audience" data-fret-range>Frets {notes.fromFret}–{notes.toFret}</p>
+            <div class="neck-wrap" data-neck data-scale={scale.id} data-box={box.id}
+              set:html={neckSvg(positions, draw, {
+                label: `${key.name} minor pentatonic ${box.name}, frets ${notes.fromFret} to ${notes.toFret}`,
+              })}
+            />
+            <p>{box.note}</p>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">The five boxes in every key</h2>
+    <p class="section-lead">One sheet per key, already at the frets you play. Each thumbnail opens that key's printable PDF.</p>
+    <ul class="key-gallery">
+      {KEYS.map((item) => (
+        <li>
+          <a href={pdfPath(boxesImagePath(item))} title={`${item.name} minor pentatonic boxes, printable PDF`}>
+            <img
+              src={boxesImagePath(item)}
+              width="1000"
+              height="1500"
+              alt={`${item.name} minor pentatonic scale chart, all five box shapes, printable`}
+              loading="lazy"
+              decoding="async"
+            />
+            <span>{item.name}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">How to practise these</h2>
+    <div class="prose">{pentatonicPage.intro.map((paragraph) => <p>{paragraph}</p>)}</div>
+    <div class="quick-links">
+      <a href="/">Guitar Chord Chart</a>
+      {CHEAPEST_ENTRIES.filter((item) => item.url !== url).map((item) => <a href={item.url}>{item.title}</a>)}
+    </div>
+  </section>
+
+  <Faq items={pentatonicPage.faq} />
+
+  <PrintRegion slot="print" sheets={[{ id: 'pentatonic-boxes', svg: boxesSheetSvg(key) }]} />
+</Base>
+
+<ScaleKeyScript />

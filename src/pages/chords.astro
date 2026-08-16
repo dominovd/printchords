@@ -1,0 +1,131 @@
+---
+/**
+ * The index of every chord shape on the site, and the parent of the individual
+ * chord pages. Not another chart: it lists the shapes rather than laying out a
+ * printable sheet, and it is where the chord breadcrumbs point.
+ */
+import Base from '../layouts/Base.astro';
+import ChordDiagram from '../components/ChordDiagram.astro';
+import { chords, primaryVariant } from '../lib/chords.mjs';
+import { charts, chartUrl } from '../data/charts.mjs';
+import { CHEAPEST_ENTRIES, absolute } from '../lib/site.mjs';
+import { pageSchema } from '../lib/schema.mjs';
+import { sheetImagePath } from '../lib/chords.mjs';
+
+const url = '/chords/';
+const metaTitle = 'Guitar Chords: Every Shape on PrintChords';
+const metaDescription =
+  'Every guitar chord shape on the site in one list: open chords, barre chords, sevenths and power chords, with printable diagrams for each.';
+
+const groups = [
+  {
+    id: 'open',
+    title: 'Open chords',
+    text: 'At least one string rings without being pressed. These are the shapes a first month is built from.',
+    chords: chords.filter((c) => {
+      const v = primaryVariant(c);
+      return !v.barre && v.positions.includes(0) && c.quality !== 'power' && !c.quality.includes('7');
+    }),
+  },
+  {
+    id: 'barre',
+    title: 'Barre chords',
+    text: 'One finger presses several strings at once. Harder to start, and movable once they work.',
+    chords: chords.filter((c) => primaryVariant(c).barre),
+  },
+  {
+    id: 'sevenths',
+    title: 'Seventh chords',
+    text: 'A fourth note added to the triad. They pull the ear towards the chord that comes next.',
+    chords: chords.filter((c) => c.quality.includes('7')),
+  },
+  {
+    id: 'power',
+    title: 'Power chords',
+    text: 'Root and fifth, no third. Neither major nor minor, which is why they hold up under distortion.',
+    chords: chords.filter((c) => c.quality === 'power'),
+  },
+].filter((group) => group.chords.length);
+
+const withPages = chords.filter((c) => c.pageUrl);
+const shapeCount = chords.reduce((total, chord) => total + chord.variants.length, 0);
+
+const schema = pageSchema({
+  name: 'Guitar chords',
+  url,
+  description: metaDescription,
+  image: sheetImagePath('guitar-chord-chart'),
+  imageAlt: 'Guitar chord chart with 12 essential chords, printable',
+  breadcrumb: [{ name: 'Home', url: '/' }, { name: 'Guitar chords', url }],
+});
+---
+
+<Base title={metaTitle} description={metaDescription} canonical={url}
+  ogImage={sheetImagePath('guitar-chord-chart')}
+  ogImageAlt="Guitar chord chart with 12 essential chords, printable" schema={schema}>
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a><span>›</span>
+    <span aria-current="page">Guitar chords</span>
+  </nav>
+
+  <h1>Guitar Chords</h1>
+  <p class="lead">
+    Every chord on the site, {shapeCount} shapes across {chords.length} chords. Each one is printable, and the
+    {withPages.length} with more than one fingering worth knowing have a page of their own.
+  </p>
+
+  {groups.map((group) => (
+    <section class="section">
+      <h2 class="section-title">{group.title}</h2>
+      <p class="section-lead">{group.text}</p>
+      <div class="chord-grid">
+        {group.chords.map((chord) => (
+          <article class="chord-card">
+            <ChordDiagram shape={primaryVariant(chord)} label={`${chord.full} chord diagram, ${primaryVariant(chord).label}`} />
+            <div class="chord-name">
+              {chord.pageUrl ? <a href={chord.pageUrl}>{chord.name}</a> : <span>{chord.name}</span>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  ))}
+
+  <section class="section">
+    <h2 class="section-title">Chords with their own page</h2>
+    <p class="section-lead">
+      Most chords have one grip worth knowing. These five have several, and which one you pick changes how easy the
+      next chord is.
+    </p>
+    <div class="card-grid">
+      {withPages.map((chord) => (
+        <a class="link-card link-card--with-diagram" href={chord.pageUrl}>
+          <ChordDiagram shape={primaryVariant(chord)} label={`${chord.full}, ${primaryVariant(chord).label}`} />
+          <b>{chord.full}</b>
+          <span>{chord.variants.length} fingerings · {chord.notes.join(' · ')}</span>
+          <em>View chord →</em>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Printable sheets</h2>
+    <div class="card-grid">
+      {charts.map((chart) => (
+        <a class="link-card" href={chartUrl(chart)}>
+          <b>{chart.title}</b>
+          <span>{chart.lead}</span>
+          <em>View chart →</em>
+        </a>
+      ))}
+      {CHEAPEST_ENTRIES.map((item) => (
+        <a class="link-card" href={item.url}>
+          <b>{item.title}</b>
+          <span>{item.text}</span>
+          <em>View sheet →</em>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>

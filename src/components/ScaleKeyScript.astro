@@ -1,0 +1,109 @@
+---
+/**
+ * Key switching. Redraws every neck, sheet and label from the same modules the
+ * server used, so a transposed page is identical to a server-rendered one.
+ * Without JavaScript the page stays on its default key and remains complete.
+ */
+---
+
+<script>
+  import { KEYS, DEFAULT_KEY, getKey, getScale, neckPositions, scaleAltText, scaleNotes, pentatonicBox, PENTATONIC_BOXES } from '../lib/scales.mjs';
+  import { neckGroup, neckSize } from '../lib/diagram.mjs';
+  import { scaleSheetSvg, boxesSheetSvg, scaleImagePath, boxesImagePath } from '../lib/scale-sheets.mjs';
+  import { pdfPath, downloadName } from '../lib/assets.mjs';
+
+  const switcher = document.querySelector('[data-key-switcher]');
+  if (switcher) {
+    const shapeFor = (el, key) => {
+      if (el.dataset.box) {
+        const index = PENTATONIC_BOXES.findIndex((b) => b.id === el.dataset.box);
+        const box = pentatonicBox(key, index);
+        return { notes: box.notes, draw: box.window, positions: box.positions };
+      }
+      const notes = { fromFret: Number(el.dataset.from), toFret: Number(el.dataset.to) };
+      return { notes, draw: notes, positions: neckPositions(getScale(el.dataset.scale), key, notes) };
+    };
+
+    const render = (keyId) => {
+      const key = getKey(keyId);
+
+      document.querySelectorAll('[data-neck]').forEach((el) => {
+        const scale = getScale(el.dataset.scale);
+        const { notes, draw, positions } = shapeFor(el, key);
+        const size = neckSize(draw.fromFret, draw.toFret);
+        el.innerHTML =
+          `<svg class="neck" viewBox="0 0 ${size.width} ${size.height}" role="img" ` +
+          `aria-label="${key.name} ${scale.name}, frets ${notes.fromFret} to ${notes.toFret}">` +
+          neckGroup(positions, draw, { scaleStroke: false }) +
+          '</svg>';
+        const caption = el.parentElement && el.parentElement.querySelector('[data-fret-range]');
+        if (caption) caption.textContent = `Frets ${notes.fromFret}–${notes.toFret}`;
+      });
+
+      document.querySelectorAll('[data-key-name]').forEach((el) => { el.textContent = key.name; });
+
+      document.querySelectorAll('[data-notes]').forEach((el) => {
+        el.textContent = scaleNotes(getScale(el.dataset.notes), key).join(' · ');
+      });
+
+      // One place decides the file and its description, so the image, the
+      // download and the pin can never end up on different keys.
+      const assetFor = (id) => id === 'pentatonic-boxes'
+        ? {
+            path: boxesImagePath(key),
+            alt: `${key.name} minor pentatonic scale chart, all five box shapes, printable`,
+          }
+        : { path: scaleImagePath(getScale(id), key), alt: scaleAltText(getScale(id), key) };
+
+      document.querySelectorAll('[data-scale-img]').forEach((el) => {
+        const asset = assetFor(el.dataset.scaleImg);
+        el.src = asset.path;
+        el.alt = asset.alt;
+      });
+
+      document.querySelectorAll('[data-scale-download]').forEach((el) => {
+        const asset = assetFor(el.dataset.scaleDownload);
+        el.href = asset.path;
+        el.setAttribute('download', asset.path.split('/').pop());
+      });
+
+      document.querySelectorAll('[data-scale-pdf]').forEach((el) => {
+        const pdf = pdfPath(assetFor(el.dataset.scalePdf).path);
+        el.href = pdf;
+        el.setAttribute('download', downloadName(pdf));
+      });
+
+      document.querySelectorAll('[data-scale-pin]').forEach((el) => {
+        const asset = assetFor(el.dataset.scalePin);
+        const pin = new URL('https://pinterest.com/pin/create/button/');
+        pin.searchParams.set('url', new URL(window.location.pathname, window.location.origin).href);
+        pin.searchParams.set('media', new URL(asset.path, window.location.origin).href);
+        pin.searchParams.set('description', `${asset.alt}. Free from printchords.com`);
+        el.href = pin.href;
+      });
+
+      document.querySelectorAll('.print-sheet[data-sheet]').forEach((el) => {
+        const id = el.dataset.sheet;
+        if (id === 'pentatonic-boxes') el.innerHTML = boxesSheetSvg(key);
+        else if (id.startsWith('scale-')) el.innerHTML = scaleSheetSvg(getScale(id.slice(6)), key);
+      });
+
+      switcher.querySelectorAll('[data-key]').forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.key === key.id));
+      });
+
+      const url = new URL(window.location.href);
+      if (key.id === DEFAULT_KEY) url.searchParams.delete('key');
+      else url.searchParams.set('key', key.id);
+      history.replaceState(null, '', url);
+    };
+
+    switcher.addEventListener('click', (event) => {
+      const button = event.target instanceof Element ? event.target.closest('[data-key]') : null;
+      if (button) render(button.dataset.key);
+    });
+
+    const requested = new URL(window.location.href).searchParams.get('key');
+    if (requested && requested !== DEFAULT_KEY && KEYS.some((k) => k.id === requested)) render(requested);
+  }
+</script>

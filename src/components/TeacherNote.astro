@@ -1,0 +1,16 @@
+---
+/**
+ * A contextual line into the teacher page.
+ *
+ * PROJECT.md names music teachers as one of the two link channels. A footer
+ * link does not reach them: a teacher meets this site on the sheet they came to
+ * print, so the invitation belongs on that page, in the text, not underneath it.
+ */
+const { sheet = 'these sheets' } = Astro.props;
+---
+
+<p class="teacher-note">
+  Teaching from {sheet}? Everything here is free to copy for a class, and
+  <a href="/for-teachers/">the page for teachers</a> covers what to print, what you are allowed to do with it and how
+  to link to it.
+</p>

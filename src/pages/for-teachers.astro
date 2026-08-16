@@ -1,0 +1,105 @@
+---
+/**
+ * The teacher page. PROJECT.md names music teachers as one of the two link
+ * channels, and without a page written for them the channel exists only on
+ * paper: there is nothing for a teacher to put on a class page.
+ */
+import Base from '../layouts/Base.astro';
+import SheetCard from '../components/SheetCard.astro';
+import { allPrintables } from '../lib/printables.mjs';
+import { CONTACT_EMAIL, SITE, absolute } from '../lib/site.mjs';
+import { pageSchema } from '../lib/schema.mjs';
+
+const url = '/for-teachers/';
+const metaTitle = 'Guitar Chord Charts for Teachers: Free Classroom Printables';
+const metaDescription =
+  'Free printable guitar chord charts for music teachers: classroom sheets, blank diagrams to fill in, and clear permission to copy them for a class.';
+
+const sheets = allPrintables();
+const hero = sheets[0];
+
+const schema = pageSchema({
+  name: 'Guitar chord charts for teachers',
+  url,
+  description: metaDescription,
+  image: hero.png,
+  imageAlt: hero.alt,
+  breadcrumb: [{ name: 'Home', url: '/' }, { name: 'For teachers', url }],
+});
+---
+
+<Base title={metaTitle} description={metaDescription} canonical={url}
+  ogImage={hero.png} ogImageAlt={hero.alt} schema={schema}>
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a><span>›</span>
+    <span aria-current="page">For teachers</span>
+  </nav>
+
+  <h1>Chord Charts for Teachers</h1>
+  <p class="lead">
+    Print as many copies as you need, for any class, without asking. No account, no watermark across the diagrams.
+  </p>
+
+  <section class="section">
+    <h2 class="section-title">What you are allowed to do</h2>
+    <div class="prose">
+      <p>
+        Print, photocopy and hand out anything on this site to your students. Put the sheets in a course pack, a
+        worksheet or a hand-out. Use the diagrams in your own teaching material. None of it needs permission and none
+        of it costs anything, now or later.
+      </p>
+      <p>
+        The only line is reselling the sheets as they are, or republishing them as the main content of another site or
+        app. The full wording is on the <a href="/terms/">terms page</a>, and it is short.
+      </p>
+      <p>
+        Every sheet carries {SITE.domain} in small type at the bottom rather than a watermark over the diagrams. That
+        is deliberate: a watermark makes a page not worth printing, and a student who liked the hand-out should be able
+        to find the rest.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">What to print for a class</h2>
+    <div class="prose">
+      <p>
+        For a first lesson, the <a href="/beginner-chord-chart/">beginner chart</a> is the one to hand out: eight open
+        shapes, no barre chords, in the order they are worth learning. It stays useful for a term.
+      </p>
+      <p>
+        Keep a stack of <a href="/blank-chord-chart/">blank sheets</a> for everything the printed charts do not cover.
+        Writing a shape down by hand as you show it fixes it in a way that reading one does not, and the six-diagram
+        version is the right size for younger students and thick pens.
+      </p>
+      <p>
+        For a wall, the <a href="/">full chord chart</a> and the
+        <a href="/guitar-scales/pentatonic/">pentatonic boxes</a> print large and read from across a room. Everything
+        is pure black on white, so a tired photocopier does not lose anything.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Every sheet, ready to print</h2>
+    <p class="section-lead">Each one gives you the printable PDF, the PNG for a slide, and a Print button.</p>
+    <div class="sheet-grid">
+      {sheets.map((sheet) => <SheetCard sheet={sheet} pageUrl={url} />)}
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Linking to these charts</h2>
+    <div class="prose">
+      <p>
+        If a class page or a resource list is the easiest way to get the sheets to your students, link straight to the
+        page rather than to the file, so the copy they reach is always the current one. No attribution format is
+        required.
+      </p>
+      <p>
+        Missing something your class needs? Write to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Requests
+        from teachers decide what gets built next more often than anything else does.
+      </p>
+    </div>
+  </section>
+</Base>

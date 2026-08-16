@@ -1,0 +1,97 @@
+---
+import Base from '../layouts/Base.astro';
+import SheetCard from '../components/SheetCard.astro';
+import PrintRegion from '../components/PrintRegion.astro';
+import Faq from '../components/Faq.astro';
+import TeacherNote from '../components/TeacherNote.astro';
+import { allPrintables } from '../lib/printables.mjs';
+import { chordsWithPages } from '../lib/chords.mjs';
+import { pageSchema } from '../lib/schema.mjs';
+
+const url = '/printable-chord-chart/';
+const sheets = allPrintables();
+const hero = sheets[0];
+const chordPages = chordsWithPages();
+
+const metaTitle = 'Printable Guitar Chord Chart: Free PDF, A4 and US Letter';
+const metaDescription =
+  'Every printable guitar chord chart on one page: essential chords, beginner chords and blank sheets. Print, save as PDF or take the PNG.';
+
+const intro = [
+  'This is the download page. Every sheet the site produces is here at full size: the twelve essential chords, the eight open shapes for a first month of playing, and blank grids in three densities for writing your own.',
+  'There is no separate PDF file to hunt for. Press Print on any sheet and choose "Save as PDF" as the destination. The sheet is drawn as vector artwork, so it stays sharp at any paper size and comes out identical to what you saw on screen. Set the scale to 100% rather than "fit to page", and turn the background graphics option off if your browser offers it: there are none, and leaving it on only slows the printer down.',
+  'Everything is pure black on white with no shading, no thin hairlines and no colour that has to survive being greyscaled. That is deliberate. These sheets are meant for the school printer with the tired cartridge, not for a photo lab.',
+];
+
+const faq = [
+  {
+    q: 'How do I get the chord chart as a PDF?',
+    a: 'Press Print on any sheet and choose "Save as PDF" as the printer. The sheets are vector artwork, so the PDF is as sharp as the paper version at A4 or US Letter, and there is nothing to download or sign up for first.',
+  },
+  {
+    q: 'Do the sheets fit A4 and US Letter?',
+    a: 'Both. The layout leaves enough margin on all four sides that neither size crops a diagram. Print at 100% scale rather than "fit to page" and the proportions stay exactly as designed.',
+  },
+  {
+    q: 'Will they print properly in black and white?',
+    a: 'Yes, they are only ever black on white. There are no grey fills, no thin hairlines and no colour coding to lose, which is why they hold up on a cheap laser printer and on a photocopy of a photocopy.',
+  },
+  {
+    q: 'Can I print these for a class?',
+    a: 'Yes. They are free, there is no sign-up and no limit on copies. The sheets carry printchords.com in small type at the bottom rather than a watermark over the diagrams, so a student can find their way back without the page being spoiled.',
+  },
+  {
+    q: 'What is the PNG for?',
+    a: 'The PNG is 1000 × 1500, which is the right shape for a phone screen, a Pinterest board or a slide. Use it when the sheet is going on a screen; use Print when it is going on paper.',
+  },
+];
+
+const schema = pageSchema({
+  name: 'Printable Guitar Chord Chart',
+  url,
+  description: metaDescription,
+  image: hero.png,
+  imageAlt: hero.alt,
+  breadcrumb: [{ name: 'Home', url: '/' }, { name: 'Printable chord charts', url }],
+  faq,
+});
+---
+
+<Base
+  title={metaTitle}
+  description={metaDescription}
+  canonical={url}
+  ogImage={hero.png}
+  ogImageAlt={hero.alt}
+  schema={schema}
+>
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a><span>›</span>
+    <span aria-current="page">Printable chord charts</span>
+  </nav>
+
+  <h1>Printable Guitar Chord Chart</h1>
+  <p class="lead">
+    Every sheet on the site, ready for A4 or US Letter. Print it, save it as a PDF or take the PNG. Free, no sign-up.
+  </p>
+
+  <h2 class="section-title">Every sheet on the site</h2>
+  <div class="sheet-grid">
+    {sheets.map((sheet) => <SheetCard sheet={sheet} pageUrl={url} />)}
+  </div>
+
+  <section class="section">
+    <h2 class="section-title">Printing these properly</h2>
+    <div class="prose">
+      {intro.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+    <TeacherNote sheet="these charts" />
+    <div class="quick-links">
+      {chordPages.map((chord) => <a href={chord.pageUrl}>{chord.name} chord</a>)}
+    </div>
+  </section>
+
+  <Faq items={faq} />
+
+  <PrintRegion slot="print" sheets={sheets.map((sheet) => ({ id: sheet.id, svg: sheet.svg }))} />
+</Base>

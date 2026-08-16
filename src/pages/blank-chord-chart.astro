@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import SheetCard from '../components/SheetCard.astro';
+import PrintRegion from '../components/PrintRegion.astro';
+import Faq from '../components/Faq.astro';
+import TeacherNote from '../components/TeacherNote.astro';
+import { blankPage, blankSheets } from '../data/blanks.mjs';
+import { blankPrintable } from '../lib/printables.mjs';
+import { charts, chartUrl } from '../data/charts.mjs';
+import { pageSchema } from '../lib/schema.mjs';
+
+const sheets = blankSheets.map(blankPrintable);
+const hero = sheets[0];
+
+const schema = pageSchema({
+  name: blankPage.h1,
+  url: blankPage.url,
+  description: blankPage.metaDescription,
+  image: hero.png,
+  imageAlt: hero.alt,
+  breadcrumb: [{ name: 'Home', url: '/' }, { name: blankPage.h1, url: blankPage.url }],
+  faq: blankPage.faq,
+});
+---
+
+<Base
+  title={blankPage.metaTitle}
+  description={blankPage.metaDescription}
+  canonical={blankPage.url}
+  ogImage={hero.png}
+  ogImageAlt={hero.alt}
+  schema={schema}
+>
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a><span>›</span>
+    <span aria-current="page">{blankPage.h1}</span>
+  </nav>
+
+  <h1>{blankPage.h1}</h1>
+  <p class="lead">{blankPage.lead}</p>
+
+  <h2 class="section-title">Choose a sheet</h2>
+  <div class="sheet-grid">
+    {sheets.map((sheet) => <SheetCard sheet={sheet} pageUrl={blankPage.url} showSource={false} />)}
+  </div>
+
+  <section class="section">
+    <h2 class="section-title">How to use a blank chord chart</h2>
+    <div class="prose">
+      {blankPage.intro.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+    <TeacherNote sheet="blank sheets" />
+    <div class="quick-links">
+      {charts.map((chart) => <a href={chartUrl(chart)}>{chart.title}</a>)}
+      <a href="/printable-chord-chart/">All printable sheets</a>
+    </div>
+  </section>
+
+  <Faq items={blankPage.faq} />
+
+  <PrintRegion slot="print" sheets={sheets.map((sheet) => ({ id: sheet.id, svg: sheet.svg }))} />
+</Base>

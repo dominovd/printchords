@@ -1,0 +1,80 @@
+keyword,volume,kd,cpc,ai_overview,image_pack,page_type,instrument,target_url,recommendation
+f chord guitar,22200,21,0.88,yes,no,single-chord,guitar,/chords/f-major/,SKIP-AIO
+guitar chord chart,18100,40,1.18,no,yes,chart,guitar,/,BUILD
+guitar chords chart,18100,34,1.18,no,yes,chart,guitar,/,BUILD
+c chord guitar,18100,25,1.23,yes,no,single-chord,guitar,/chords/c-major/,SKIP-AIO
+g chord guitar,18100,15,1.22,no,yes,single-chord,guitar,/chords/g-major/,BUILD
+b chord guitar,14800,28,0.97,yes,yes,single-chord,guitar,/chords/b-major/,SKIP-AIO
+d chord guitar,14800,23,1.1,no,yes,single-chord,guitar,/chords/d-major/,BUILD
+guitar tab b chord,12100,31,0.96,no,yes,single-chord,guitar,/chords/b-major/,BUILD
+chords diagrams guitar,12100,45,1.18,yes,yes,chart,guitar,/,LATER-highKD
+guitar chords tablature chart,9900,56,1.18,yes,yes,chart,guitar,/,LATER-highKD
+a chord guitar,9900,34,1.32,no,yes,single-chord,guitar,/chords/a-major/,BUILD
+b minor chord guitar,9900,38,0.29,no,yes,single-chord,guitar,/chords/b-minor/,BUILD
+bm chord guitar,9900,41,0.29,no,yes,single-chord,guitar,/chords/b-minor/,BUILD
+chord f#m guitar,9900,14,0.0,yes,no,single-chord,guitar,/chords/fsharp-m/,SKIP-AIO
+d#m guitar chords,9900,16,0.0,yes,no,single-chord,guitar,/chords/dsharp-m/,SKIP-AIO
+d7 guitar chord,9900,31,0.46,yes,no,single-chord,guitar,/chords/d-7/,SKIP-AIO
+e chord guitar,9900,16,1.17,yes,no,single-chord,guitar,/chords/e-major/,SKIP-AIO
+em7 guitar chord,9900,18,0.0,yes,yes,single-chord,guitar,/chords/e-m7/,SKIP-AIO
+fm chord in guitar,9900,17,0.0,yes,yes,single-chord,guitar,/chords/f-m/,SKIP-AIO
+a7 guitar chord,8100,17,0.26,yes,no,single-chord,guitar,/chords/a-7/,SKIP-AIO
+am7 guitar chord,8100,35,0.0,yes,no,single-chord,guitar,/chords/a-m7/,SKIP-AIO
+b7 guitar chord,8100,30,0.0,yes,yes,single-chord,guitar,/chords/b-7/,SKIP-AIO
+dm7 guitar chord,8100,13,0.0,yes,yes,single-chord,guitar,/chords/d-m7/,SKIP-AIO
+e minor chord guitar,8100,22,1.29,yes,no,single-chord,guitar,/chords/e-minor/,SKIP-AIO
+e7 guitar chord,8100,16,0.39,yes,yes,single-chord,guitar,/chords/e-7/,SKIP-AIO
+f#m chord in guitar,8100,14,0.0,yes,no,single-chord,guitar,/chords/fsharp-m/,SKIP-AIO
+fmaj7 guitar chord,8100,17,0.0,yes,no,single-chord,guitar,/chords/f-maj7/,SKIP-AIO
+gm chord guitar,8100,18,0.0,yes,yes,single-chord,guitar,/chords/g-m/,SKIP-AIO
+guitar basic chords chart beginner,4400,27,1.54,yes,yes,chart,guitar,/beginner-chord-chart/,BUILD
+chord chart guitar,2900,40,1.18,no,yes,chart,guitar,/,BUILD
+guitar ultimate chord chart,2900,34,1.63,yes,yes,chart,guitar,/,BUILD
+guitar scales chart,2900,17,1.24,no,yes,scales,guitar,/guitar-scales/,BUILD
+basic guitar chords chart,2400,28,1.54,no,yes,chart,guitar,/beginner-chord-chart/,BUILD
+easy guitar chord chart,1900,26,1.54,no,yes,chart,guitar,/beginner-chord-chart/,BUILD
+guitar chord tablature chart,1900,40,1.18,no,yes,chart,guitar,/,BUILD
+guitar chords chart for beginners,1600,16,1.57,no,yes,chart,guitar,/beginner-chord-chart/,BUILD
+basic guitar chord chart,1300,24,1.55,no,yes,chart,guitar,/beginner-chord-chart/,BUILD
+bass guitar chord chart,1300,12,1.57,no,yes,chart,bass,/bass-chord-chart/,BUILD
+guitar chord charts,1300,27,1.25,no,yes,chart,guitar,/,BUILD
+guitar chord notes chart,1300,26,1.49,yes,yes,chart,guitar,/,BUILD
+guitar scale chart,1300,26,0.93,no,yes,scales,guitar,/guitar-scales/,BUILD
+guitar basic chords chart,1000,26,1.54,no,yes,chart,guitar,/beginner-chord-chart/,BUILD
+guitar chord chart for beginners,1000,25,1.54,no,yes,chart,guitar,/beginner-chord-chart/,BUILD
+guitar chord chart pdf,1000,11,1.03,no,yes,chart,guitar,/printable-chord-chart/,BUILD
+guitar chart chords,880,38,1.19,no,yes,chart,guitar,/,BUILD
+guitar chord charts for beginners,880,24,1.55,no,yes,chart,guitar,/beginner-chord-chart/,BUILD
+simple guitar chords chart,880,31,1.57,no,yes,chart,guitar,/beginner-chord-chart/,BUILD
+acoustic guitar chords chart,720,38,1.87,no,yes,chart,guitar,/acoustic-chord-chart/,BUILD
+beginner guitar chord chart,720,24,1.5,no,yes,chart,guitar,/beginner-chord-chart/,BUILD
+beginner guitar chords chart,720,29,1.5,no,yes,chart,guitar,/beginner-chord-chart/,BUILD
+guitar chords for beginners chart,720,23,1.55,no,yes,chart,guitar,/beginner-chord-chart/,BUILD
+ultimate guitar chord chart,720,38,1.17,no,yes,chart,guitar,/,BUILD
+blank guitar chord chart,590,9,1.34,no,yes,chart,guitar,/blank-chord-chart/,BUILD
+guitar chord progression chart,590,17,0.97,no,yes,chart,guitar,/chord-progressions-chart/,BUILD
+guitar chords chart pdf,590,10,0.96,no,yes,chart,guitar,/printable-chord-chart/,BUILD
+chord charts guitar,480,32,1.25,no,yes,chart,guitar,/,BUILD
+electric bass guitar chord chart,480,12,1.57,no,yes,chart,bass,/bass-chord-chart/,BUILD
+guitar bar chords chart,480,25,0.49,no,yes,chart,guitar,/barre-chords-chart/,BUILD
+guitar chord chart printable,480,16,1.14,no,yes,chart,guitar,/printable-chord-chart/,BUILD
+guitar chords chart download,480,22,0.0,no,yes,chart,guitar,/printable-chord-chart/,BUILD
+guitar power chords chart,480,9,1.34,no,yes,chart,guitar,/power-chords-chart/,BUILD
+printable guitar chord chart,480,12,1.01,no,yes,chart,guitar,/printable-chord-chart/,BUILD
+bass guitar scales chart,480,14,1.48,no,yes,scales,bass,/guitar-scales/,LATER-bass
+guitar music scales chart,390,12,1.24,no,yes,scales,guitar,/guitar-scales/,BUILD
+guitar string gauge chart,320,27,0.27,no,yes,reference,guitar,/string-gauge-chart/,BUILD
+beginner guitar scales chart,260,13,1.15,no,yes,scales,guitar,/guitar-scales/,BUILD
+guitar scales chart for beginners,260,15,1.12,no,yes,scales,guitar,/guitar-scales/,BUILD
+pentatonic scale guitar chart,260,6,0.0,no,yes,scales,guitar,/guitar-scales/pentatonic/,BUILD
+guitar scales chart pentatonic,210,17,0.0,no,yes,scales,guitar,/guitar-scales/pentatonic/,BUILD
+scale charts for guitar,210,10,1.24,no,yes,scales,guitar,/guitar-scales/,BUILD
+guitar major scale chart,170,9,0.0,no,yes,scales,guitar,/guitar-scales/,BUILD
+guitar scale charts,170,13,0.93,no,yes,scales,guitar,/guitar-scales/,BUILD
+guitar pentatonic scale chart,140,7,0.0,no,yes,scales,guitar,/guitar-scales/pentatonic/,BUILD
+guitar pentatonic scales chart,110,15,0.0,no,yes,scales,guitar,/guitar-scales/pentatonic/,BUILD
+bass guitar string gauge chart,110,9,0.18,yes,yes,reference,guitar,/string-gauge-chart/,BUILD
+acoustic guitar string gauge chart,90,10,0.09,no,yes,reference,guitar,/string-gauge-chart/,BUILD
+guitar scales chart pdf,70,11,0.0,no,yes,scales,guitar,/guitar-scales/,BUILD
+guitar minor scale chart,50,14,0.0,no,yes,scales,guitar,/guitar-scales/,BUILD
+blues guitar scales chart,40,16,0.0,no,yes,scales,guitar,/guitar-scales/,BUILD

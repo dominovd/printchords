@@ -1,0 +1,26 @@
+---
+import { SITE, FOOTER_CHARTS, CHORD_LINKS, SITE_PAGES, CONTACT_EMAIL } from '../lib/site.mjs';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <nav aria-label="Charts">
+      <h2>Charts</h2>
+      {FOOTER_CHARTS.map((item) => <a href={item.url}>{item.label}</a>)}
+    </nav>
+    <nav aria-label="Chords">
+      <h2>Chords</h2>
+      {CHORD_LINKS.map((item) => <a href={item.url}>{item.label}</a>)}
+    </nav>
+    <nav aria-label="Site">
+      <h2>Site</h2>
+      {SITE_PAGES.map((item) => <a href={item.url}>{item.label}</a>)}
+      <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+    </nav>
+  </div>
+  <div class="shell footer-legal">
+    <span>© {year} {SITE.domain}</span>
+    <span>{SITE.tagline}. Free to print, free to teach with.</span>
+  </div>
+</footer>

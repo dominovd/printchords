@@ -1,0 +1,29 @@
+---
+/**
+ * Twelve keys as a URL parameter, per DESIGN.md §4: one canonical page, the
+ * chosen key in ?key= so a link can be shared.
+ *
+ * Only the default key ships in the HTML. The other eleven are transpositions
+ * of the same chart, they carry no separate search intent, and the canonical
+ * deliberately drops the parameter. Rendering all twelve would add close to a
+ * megabyte of markup that must never be indexed. The tab panels on a chord page
+ * are the opposite case, and they do all ship.
+ */
+import { KEYS } from '../lib/scales.mjs';
+
+const { current } = Astro.props;
+---
+
+<div class="key-switcher" data-key-switcher>
+  <span class="key-switcher__label">Key</span>
+  <div class="key-switcher__buttons" role="group" aria-label="Choose a key">
+    {KEYS.map((key) => (
+      <button
+        type="button"
+        class="key-chip"
+        data-key={key.id}
+        aria-pressed={key.id === current ? 'true' : 'false'}
+      >{key.name}</button>
+    ))}
+  </div>
+</div>

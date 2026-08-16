@@ -1,0 +1,147 @@
+---
+import Base from '../../layouts/Base.astro';
+import KeySwitcher from '../../components/KeySwitcher.astro';
+import ScaleKeyScript from '../../components/ScaleKeyScript.astro';
+import PrintRegion from '../../components/PrintRegion.astro';
+import Faq from '../../components/Faq.astro';
+import TeacherNote from '../../components/TeacherNote.astro';
+import { scalesPage } from '../../data/scale-pages.mjs';
+import { DEFAULT_KEY, KEYS, SCALES, getKey, neckPositions, scaleAltText, scaleNotes } from '../../lib/scales.mjs';
+import { FULL_NECK, scaleImagePath, scaleSheetSvg } from '../../lib/scale-sheets.mjs';
+import { neckSvg } from '../../lib/diagram.mjs';
+import { SITE, CHEAPEST_ENTRIES, absolute } from '../../lib/site.mjs';
+import { pageSchema } from '../../lib/schema.mjs';
+import { pdfPath, downloadName } from '../../lib/assets.mjs';
+
+const key = getKey(DEFAULT_KEY);
+const url = scalesPage.url;
+const heroImage = scaleImagePath(SCALES[0], key);
+
+// The pin has to carry the same image the page is showing. Building it in one
+// place keeps the key switcher honest. It used to leave the pin on the
+// default key while every other link followed.
+const pinHref = (image, description) =>
+  'https://pinterest.com/pin/create/button/?url=' + encodeURIComponent(absolute(url)) +
+  '&media=' + encodeURIComponent(absolute(image)) +
+  '&description=' + encodeURIComponent(`${description}. Free from ${SITE.domain}`);
+
+const schema = pageSchema({
+  name: scalesPage.h1,
+  url,
+  description: scalesPage.metaDescription,
+  image: heroImage,
+  imageAlt: scaleAltText(SCALES[0], key),
+  breadcrumb: [{ name: 'Home', url: '/' }, { name: scalesPage.h1, url }],
+  faq: scalesPage.faq,
+});
+---
+
+<Base
+  title={scalesPage.metaTitle}
+  description={scalesPage.metaDescription}
+  canonical={url}
+  ogImage={heroImage}
+  ogImageAlt={scaleAltText(SCALES[0], key)}
+  schema={schema}
+>
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a><span>›</span>
+    <span aria-current="page">{scalesPage.h1}</span>
+  </nav>
+
+  <h1>{scalesPage.h1}</h1>
+  <p class="lead">{scalesPage.lead}</p>
+
+  <KeySwitcher current={key.id} />
+
+  {SCALES.map((scale) => (
+    <section class="section scale-block">
+      <h2 class="section-title"><span data-key-name>{key.name}</span> {scale.name.toLowerCase()}</h2>
+      <p class="section-lead">{scale.summary}</p>
+      <div class="scale-layout">
+        <div>
+          <div class="neck-wrap" data-neck data-scale={scale.id} data-from={FULL_NECK.fromFret} data-to={FULL_NECK.toFret}
+            set:html={neckSvg(neckPositions(scale, key, FULL_NECK), FULL_NECK, {
+              label: `${key.name} ${scale.name}, frets ${FULL_NECK.fromFret} to ${FULL_NECK.toFret}`,
+            })}
+          />
+          <div class="scale-facts">
+            <span><b>Notes</b> <span data-notes={scale.id}>{scaleNotes(scale, key).join(' · ')}</span></span>
+            <span><b>Best for</b> {scale.bestFor}</span>
+          </div>
+          <div class="scale-actions">
+            <button class="btn btn--primary" type="button" data-print={`scale-${scale.id}`}>Print this scale</button>
+            <a class="btn" href={pdfPath(scaleImagePath(scale, key))} data-scale-pdf={scale.id}
+              download={downloadName(pdfPath(scaleImagePath(scale, key)))}>Download PDF</a>
+            <a class="btn" href={scaleImagePath(scale, key)} data-scale-download={scale.id} download>Download PNG</a>
+            <a class="btn btn--pin" rel="nofollow noopener" target="_blank"
+              data-scale-pin={scale.id}
+              href={pinHref(scaleImagePath(scale, key), scaleAltText(scale, key))}
+            >Save to Pinterest</a>
+            <p class="action-note">Free. No sign-up. A4 and US Letter.</p>
+          </div>
+        </div>
+        <aside class="scale-print">
+          <div class="artifact-head">
+            <strong>Printable sheet</strong>
+            <span class="size">PNG · 1000×1500</span>
+          </div>
+          <img
+            class="print-card"
+            data-scale-img={scale.id}
+            src={scaleImagePath(scale, key)}
+            width="1000"
+            height="1500"
+            alt={scaleAltText(scale, key)}
+            decoding="async"
+          />
+          <p class="artifact-note">The whole neck, frets 1 to 24, on one page.</p>
+        </aside>
+      </div>
+      {/* Every key as a real file with a visible thumbnail. The switcher above
+          is a convenience; these are what a search for "C blues scale chart"
+          has to be able to find. */}
+      <h3 class="key-gallery__title">{scale.name} in every key <span>printable PDF</span></h3>
+      <ul class="key-gallery">
+        {KEYS.map((item) => (
+          <li>
+            <a href={pdfPath(scaleImagePath(scale, item))} title={`${item.name} ${scale.chartName}, printable PDF`}>
+              <img
+                src={scaleImagePath(scale, item)}
+                width="1000"
+                height="1500"
+                alt={scaleAltText(scale, item)}
+                loading="lazy"
+                decoding="async"
+              />
+              <span>{item.name}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      {scale.id === 'minor-pentatonic' && (
+        <p class="quick-links"><a href="/guitar-scales/pentatonic/">All five pentatonic boxes →</a></p>
+      )}
+    </section>
+  ))}
+
+  <section class="section">
+    <h2 class="section-title">How to use these charts</h2>
+    <div class="prose">
+      {scalesPage.intro.map((paragraph) => <p>{paragraph}</p>)}
+      <TeacherNote sheet="these scale charts" />
+    </div>
+    <div class="quick-links">
+      {CHEAPEST_ENTRIES.filter((item) => item.url !== url).map((item) => <a href={item.url}>{item.title}</a>)}
+    </div>
+  </section>
+
+  <Faq items={scalesPage.faq} />
+
+  <PrintRegion
+    slot="print"
+    sheets={SCALES.map((scale) => ({ id: `scale-${scale.id}`, svg: scaleSheetSvg(scale, key) }))}
+  />
+</Base>
+
+<ScaleKeyScript />

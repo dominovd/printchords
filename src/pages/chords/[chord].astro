@@ -1,0 +1,277 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChordDiagram from '../../components/ChordDiagram.astro';
+import ArtifactBar from '../../components/ArtifactBar.astro';
+import PrintRegion from '../../components/PrintRegion.astro';
+import Faq from '../../components/Faq.astro';
+import { chordsWithPages, getChord, cardImagePath, primaryVariant } from '../../lib/chords.mjs';
+import { chartsContaining, chartUrl, rootChart } from '../../data/charts.mjs';
+import { chordFaq, chordTeaser, commonKeys, factRows } from '../../lib/chord-page.mjs';
+import { printableCardSvg } from '../../lib/diagram.mjs';
+import { SITE, CHEAPEST_ENTRIES, absolute } from '../../lib/site.mjs';
+import { pageSchema } from '../../lib/schema.mjs';
+import { pdfPath, downloadName } from '../../lib/assets.mjs';
+
+export function getStaticPaths() {
+  return chordsWithPages().map((chord) => ({
+    params: { chord: chord.id },
+    props: { chord },
+  }));
+}
+
+const { chord } = Astro.props;
+const url = chord.pageUrl;
+const variants = chord.variants;
+const primary = primaryVariant(chord);
+const primaryIndex = Math.max(0, variants.indexOf(primary));
+const heroPng = cardImagePath(chord, primary);
+
+const faq = chordFaq(chord);
+const keys = commonKeys(chord);
+const charts = chartsContaining(chord.id);
+const nextChords = chordsWithPages().filter((c) => c.id !== chord.id);
+
+const sheets = variants.map((shape) => ({
+  id: `${chord.id}-${shape.id}`,
+  svg: printableCardSvg(chord, shape),
+}));
+
+const heroAlt = `${chord.full} chord, ${primary.label}, printable chord card`;
+
+const schema = pageSchema({
+  name: `${chord.name} chord on guitar`,
+  url,
+  description: chord.metaDescription || chord.lead,
+  image: heroPng,
+  imageAlt: heroAlt,
+  breadcrumb: [
+    { name: 'Home', url: '/' },
+    { name: 'Guitar chords', url: '/chords/' },
+    { name: chord.full, url },
+  ],
+  faq,
+});
+---
+
+<Base
+  title={`${chord.name} Chord on Guitar: ${variants.length} Printable Fingerings`}
+  description={chord.metaDescription || chord.lead}
+  canonical={url}
+  ogImage={heroPng}
+  ogImageAlt={heroAlt}
+  schema={schema}
+>
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a><span>›</span>
+    <a href="/chords/">Chords</a><span>›</span>
+    <span aria-current="page">{chord.full}</span>
+  </nav>
+
+  <h1>{chord.name} Chord on Guitar</h1>
+  <p class="lead">{chord.lead}</p>
+
+  <div class="tabs" role="tablist" aria-label={`${chord.full} fingerings`}>
+    {variants.map((shape, index) => (
+      <button
+        class="tab"
+        type="button"
+        role="tab"
+        id={`tab-${shape.id}`}
+        aria-controls={`panel-${shape.id}`}
+        aria-selected={index === primaryIndex ? 'true' : 'false'}
+        data-tab={shape.id}
+      >
+        {shape.shortLabel}
+        <span>{shape.badge}</span>
+      </button>
+    ))}
+  </div>
+
+  {/* Every panel ships in the HTML. The tabs only change which one is visible,
+      so a crawler sees all fingerings without running any script. */}
+  <div class="variant-stage">
+    {variants.map((shape, index) => (
+      <article
+        class="variant-panel"
+        id={`panel-${shape.id}`}
+        role="tabpanel"
+        aria-labelledby={`tab-${shape.id}`}
+        data-panel={shape.id}
+        data-active={index === primaryIndex ? '' : undefined}
+      >
+        <div class="diagram-side">
+          <div class="hero-diagram">
+            <ChordDiagram shape={shape} label={`${chord.full} chord diagram, ${shape.label}`} />
+          </div>
+          <div class="variant-copy">
+            <p class="eyebrow">{shape.badge}</p>
+            <h2>{shape.label}</h2>
+            <p>{shape.summary}</p>
+            {factRows(chord, shape).map((row) => (
+              <div class="fact"><span>{row.label}</span><b>{row.value}</b></div>
+            ))}
+          </div>
+          <div class="variant-actions">
+            <button class="btn btn--primary" type="button" data-print={`${chord.id}-${shape.id}`}>Print this shape</button>
+            <a class="btn" href={pdfPath(cardImagePath(chord, shape))} download={downloadName(pdfPath(cardImagePath(chord, shape)))}>Download PDF</a>
+            <a class="btn" href={cardImagePath(chord, shape)} download={`${chord.id}-${shape.id}.png`}>Download PNG</a>
+            <a
+              class="btn btn--pin"
+              rel="nofollow noopener"
+              target="_blank"
+              href={`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(absolute(url))}&media=${encodeURIComponent(absolute(cardImagePath(chord, shape)))}&description=${encodeURIComponent(`${chord.full} chord, ${shape.label}. Free printable from ${SITE.domain}`)}`}
+            >Save to Pinterest</a>
+            <p class="action-note">Free. No sign-up. A4 and US Letter.</p>
+          </div>
+        </div>
+        <aside class="artifact-side">
+          <div class="artifact-head">
+            <strong>Printable chord card</strong>
+            <span class="size">PNG · 1000×1500</span>
+          </div>
+          <img
+            class="print-card"
+            src={cardImagePath(chord, shape)}
+            width="1000"
+            height="1500"
+            alt={`${chord.full} chord card, ${shape.label}, printable`}
+            decoding="async"
+          />
+          <p class="artifact-note">One page, black and white, A4 and US Letter.</p>
+        </aside>
+      </article>
+    ))}
+  </div>
+
+  <section class="section">
+    <h2 class="section-title">Compare all {variants.length} fingerings</h2>
+    <p class="section-lead">
+      Every card below is the printable file itself, at full size on the page. Choose the shape that fits your hand and
+      the chord that comes next, then print or download it on its own.
+    </p>
+    {/* These are the printable PNGs, shown rather than hidden: each fingering's
+        card is the page's most valuable asset for image search, and an image
+        that only exists inside a display:none panel barely gets indexed. */}
+    <div class="compare-grid">
+      {variants.map((shape) => (
+        <article class="shape-card">
+          <span class="badge">{shape.badge}</span>
+          <h3>{shape.label}</h3>
+          <p class="audience">{shape.bestFor}</p>
+          <img
+            class="shape-print-card"
+            src={cardImagePath(chord, shape)}
+            width="1000"
+            height="1500"
+            alt={`${chord.full} chord card, ${shape.label}, printable 1000 by 1500 PNG`}
+            decoding="async"
+          />
+          <div class="mini-actions">
+            <button class="btn" type="button" data-print={`${chord.id}-${shape.id}`}>Print</button>
+            <a class="btn" href={pdfPath(cardImagePath(chord, shape))} download={downloadName(pdfPath(cardImagePath(chord, shape)))}>PDF</a>
+            <a class="btn" href={cardImagePath(chord, shape)} download={`${chord.id}-${shape.id}.png`}>PNG</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">What notes are in {chord.full}?</h2>
+    <div class="facts-grid">
+      <article class="info-card">
+        <h3>Chord tones</h3>
+        <div class="note-row">
+          {chord.notes.map((note) => <span class="note-chip">{note}</span>)}
+        </div>
+        <p>
+          {chord.root} is the root, {chord.notes[1]} is the {chord.quality === 'minor' ? 'minor' : 'major'} third,
+          and {chord.notes[2]} is the perfect fifth. Every shape on this page sounds those notes and nothing else;
+          only the order and the octave change.
+        </p>
+      </article>
+      <article class="info-card">
+        <h3>Common keys</h3>
+        <div class="key-list">{keys.map((key) => <span>{key}</span>)}</div>
+        <p>{chord.name} belongs to all four of these keys, which is why it turns up so often in songs that never
+          mention it in the title.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">About the {chord.name} chord</h2>
+    <p class="section-lead" style="max-width: 860px">{chord.intro}</p>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Find {chord.name} in these printable sheets</h2>
+    <p class="section-lead">Practise the chord in context, then take the blank sheets to write down the shapes a teacher shows you.</p>
+    <div class="card-grid">
+      {charts.map((item) => (
+        <a class="link-card" href={chartUrl(item)}>
+          <b>{item.title}</b>
+          <span>{item.lead}</span>
+          <em>View chart →</em>
+        </a>
+      ))}
+      {CHEAPEST_ENTRIES.map((item) => (
+        <a class="link-card" href={item.url}>
+          <b>{item.title}</b>
+          <span>{item.text}</span>
+          <em>View sheet →</em>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  {nextChords.length > 0 && (
+    <section class="section">
+      <h2 class="section-title">Learn these next</h2>
+      <p class="section-lead">The other chords with more than one shape worth knowing.</p>
+      <div class="next-grid">
+        {nextChords.map((next) => (
+          <article class="next-card">
+            <ChordDiagram shape={primaryVariant(next)} label={`${next.full}, ${primaryVariant(next).label}`} />
+            <div>
+              <h3>{next.name} chord</h3>
+              <p>{chordTeaser(next.id)}</p>
+              <a href={next.pageUrl}>View {next.name} chord →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <Faq items={faq} />
+
+  <PrintRegion slot="print" sheets={sheets} />
+</Base>
+
+<script>
+  const tablist = document.querySelector('.tabs');
+  if (tablist) {
+    const tabs = [...tablist.querySelectorAll('[data-tab]')];
+    const select = (id) => {
+      tabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.tab === id)));
+      document.querySelectorAll('[data-panel]').forEach((panel) => {
+        if (panel.dataset.panel === id) panel.setAttribute('data-active', '');
+        else panel.removeAttribute('data-active');
+      });
+    };
+    tablist.addEventListener('click', (event) => {
+      const tab = event.target instanceof Element ? event.target.closest('[data-tab]') : null;
+      if (tab) select(tab.dataset.tab);
+    });
+    tablist.addEventListener('keydown', (event) => {
+      const index = tabs.findIndex((tab) => tab.getAttribute('aria-selected') === 'true');
+      const delta = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
+      if (!delta) return;
+      event.preventDefault();
+      const next = tabs[(index + delta + tabs.length) % tabs.length];
+      select(next.dataset.tab);
+      next.focus();
+    });
+  }
+</script>

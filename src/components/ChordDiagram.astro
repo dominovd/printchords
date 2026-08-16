@@ -1,0 +1,8 @@
+---
+import { diagramSvg } from '../lib/diagram.mjs';
+
+const { shape, label, class: className = 'diagram' } = Astro.props;
+const svg = diagramSvg(shape, { label, className });
+---
+
+<Fragment set:html={svg} />

@@ -1,0 +1,42 @@
+---
+/**
+ * One printable sheet, shown as the actual PNG rather than a thumbnail stand-in.
+ * The file has to have a visible occurrence on the page: image results are the
+ * point of generating a separate PNG per sheet.
+ */
+import { SITE, absolute } from '../lib/site.mjs';
+import { pdfPath, downloadName } from '../lib/assets.mjs';
+
+const { sheet, pageUrl, showSource = true } = Astro.props;
+
+const pinUrl =
+  'https://pinterest.com/pin/create/button/?url=' +
+  encodeURIComponent(absolute(pageUrl)) +
+  '&media=' + encodeURIComponent(absolute(sheet.png)) +
+  '&description=' + encodeURIComponent(`${sheet.title}. ${sheet.subtitle}. Free printable from ${SITE.domain}`);
+---
+
+<article class="sheet-card">
+  <div class="sheet-card__head">
+    <h3>{sheet.title}</h3>
+    <p class="audience">{sheet.bestFor}</p>
+  </div>
+  <img
+    class="sheet-card__image"
+    src={sheet.png}
+    width="1000"
+    height="1500"
+    alt={sheet.alt}
+    decoding="async"
+  />
+  <p class="sheet-card__text">{sheet.description}</p>
+  <div class="sheet-card__actions">
+    <button class="btn btn--primary" type="button" data-print={sheet.id}>Print</button>
+    <a class="btn" href={pdfPath(sheet.png)} download={downloadName(pdfPath(sheet.png))}>PDF</a>
+    <a class="btn" href={sheet.png} download={`${sheet.id}.png`}>PNG</a>
+    <a class="btn btn--pin" href={pinUrl} rel="nofollow noopener" target="_blank">Pin</a>
+  </div>
+  {showSource && sheet.sourceUrl !== pageUrl && (
+    <a class="sheet-card__source" href={sheet.sourceUrl}>{sheet.sourceLabel} →</a>
+  )}
+</article>

@@ -1,0 +1,287 @@
+{
+  "schemaVersion": 3,
+  "tuning": { "id": "standard", "label": "Standard tuning", "strings": ["E2", "A2", "D3", "G3", "B3", "E4"] },
+  "positionEncoding": { "-1": "muted", "0": "open", "positiveInteger": "fret" },
+  "note": "positions and fingers are indexed low-to-high: [6th string ... 1st string]. barre.fromString / toString use guitar numbering (6 = low E, 1 = high E).",
+  "chords": [
+    {
+      "id": "c-major", "name": "C", "full": "C major", "root": "C", "quality": "major",
+      "notes": ["C", "E", "G"], "primaryVariant": "open",
+      "variants": [
+        { "id": "open", "label": "Open position", "shortLabel": "Open", "badge": "Most common",
+          "summary": "The standard open C. Keep the ring finger anchored and the move to G or Am costs almost nothing.",
+          "positions": [-1, 3, 2, 0, 1, 0], "fingers": [0, 3, 2, 0, 1, 0], "barre": null, "startFret": 1,
+          "bestFor": "All players" }
+      ]
+    },
+    {
+      "id": "d-major", "name": "D", "full": "D major", "root": "D", "quality": "major",
+      "notes": ["D", "F#", "A"], "primaryVariant": "open",
+      "pageUrl": "/chords/d-major/",
+      "metaDescription": "Two printable ways to play the D chord on guitar: the open shape every beginner learns first, and the movable A-shape barre at the fifth fret.",
+      "lead": "Two ways to play D major: the open triangle every beginner learns first, and the movable A-shape barre that gives you the same chord anywhere on the neck.",
+      "intro": "D major is a three-finger shape on the top four strings, which is why it turns up in the first week of almost every guitar course. The awkward part is not the grip but the aim: all three fingers land in the same two frets and the low strings have to stay quiet. Anchor the index finger on the third string first and let the other two follow it. Once the open shape is comfortable, the A-shape barre at the fifth fret is worth the effort, because it is the same chord with a movable grip: learning it once also hands you E at the seventh fret and G at the tenth.",
+      "variants": [
+        { "id": "open", "label": "Open position", "shortLabel": "Open", "badge": "Most common",
+          "summary": "The shape almost everyone learns first. Strum from the open D string down; the two lowest strings stay out of the chord.",
+          "positions": [-1, -1, 0, 2, 3, 2], "fingers": [0, 0, 0, 1, 3, 2], "barre": null, "startFret": 1,
+          "bestFor": "All players" },
+        { "id": "barre-fifth-fret", "label": "Barre at 5th fret", "shortLabel": "5th-fret barre", "badge": "Movable shape",
+          "summary": "The A shape moved up five frets. The same grip two frets higher gives you E, and five higher gives you G.",
+          "positions": [-1, 5, 7, 7, 7, 5], "fingers": [0, 1, 2, 3, 4, 1],
+          "barre": { "fret": 5, "fromString": 5, "toString": 1, "finger": 1 }, "startFret": 5,
+          "bestFor": "Moving up the neck" }
+      ]
+    },
+    {
+      "id": "e-major", "name": "E", "full": "E major", "root": "E", "quality": "major",
+      "notes": ["E", "G#", "B"], "primaryVariant": "open",
+      "variants": [
+        { "id": "open", "label": "Open position", "shortLabel": "Open", "badge": "Most common",
+          "summary": "All six strings ring. This grip is also the template for every E-shape barre chord further up the neck.",
+          "positions": [0, 2, 2, 1, 0, 0], "fingers": [0, 2, 3, 1, 0, 0], "barre": null, "startFret": 1,
+          "bestFor": "All players" }
+      ]
+    },
+    {
+      "id": "g-major", "name": "G", "full": "G major", "root": "G", "quality": "major",
+      "notes": ["G", "B", "D"], "primaryVariant": "open-classic",
+      "pageUrl": "/chords/g-major/",
+      "metaDescription": "Four printable ways to play the G chord on guitar: two open fingerings, a movable barre at the third fret and a fuller four-finger voicing.",
+      "lead": "Four useful ways to play G major: two open fingerings that use the same notes, a movable barre shape, and a fuller four-finger voicing. Every shape is printable.",
+      "intro": "G major is one of the first chords worth learning properly, because the fingering you pick decides how easy the next chord is. The classic open G uses the ring, middle and little finger and leaves the index free, which suits players heading for C. The 1-2-3 fingering plays exactly the same notes with a more compact hand and suits players heading for D. Neither is more correct than the other, and most people end up using both. The barre shape at the third fret is the one that pays off later: it is movable, so the same grip gives you A at the fifth fret and B at the seventh.",
+      "variants": [
+        { "id": "open-classic", "label": "Open position", "shortLabel": "Open", "badge": "Most common",
+          "summary": "The standard cowboy G. Ring, middle and little finger do the work, so the index finger stays free for the change to C.",
+          "positions": [3, 2, 0, 0, 0, 3], "fingers": [3, 2, 0, 0, 0, 4], "barre": null, "startFret": 1,
+          "bestFor": "Changing to C" },
+        { "id": "index-first", "label": "1-2-3 fingering", "shortLabel": "1-2-3", "badge": "Easier reach",
+          "summary": "The same notes with a more compact hand. Index on the A string keeps the stretch small and the change to D quick.",
+          "positions": [3, 2, 0, 0, 0, 3], "fingers": [2, 1, 0, 0, 0, 3], "barre": null, "startFret": 1,
+          "bestFor": "Changing to D" },
+        { "id": "barre-third-fret", "label": "Barre at 3rd fret", "shortLabel": "3rd-fret barre", "badge": "Movable shape",
+          "summary": "The E shape moved up three frets. Learn it once and the same grip gives you A at the fifth fret and B at the seventh.",
+          "positions": [3, 5, 5, 4, 3, 3], "fingers": [1, 3, 4, 2, 1, 1],
+          "barre": { "fret": 3, "fromString": 6, "toString": 1, "finger": 1 }, "startFret": 3,
+          "bestFor": "Moving up the neck" },
+        { "id": "four-finger", "label": "Four-finger G", "shortLabel": "Four-finger", "badge": "Fuller voicing",
+          "summary": "Adds D on the B string for a thicker sound. Ring finger on the B string, little finger on the high E, so nothing crosses over.",
+          "positions": [3, 2, 0, 0, 3, 3], "fingers": [2, 1, 0, 0, 3, 4], "barre": null, "startFret": 1,
+          "bestFor": "Fuller strumming" }
+      ]
+    },
+    {
+      "id": "a-major", "name": "A", "full": "A major", "root": "A", "quality": "major",
+      "notes": ["A", "C#", "E"], "primaryVariant": "open",
+      "pageUrl": "/chords/a-major/",
+      "metaDescription": "Three printable ways to play the A chord on guitar: the open shape, a one-finger version for small hands, and the barre at the fifth fret.",
+      "lead": "Three ways to play A major: the open shape with three fingers side by side, a one-finger version for small hands, and the movable E-shape barre at the fifth fret.",
+      "intro": "A major puts three fingers in one fret on three neighbouring strings, and that is the whole difficulty. Small hands run out of room, which is why the one-finger version exists: flatten the ring finger across the D, G and B strings and let the high E ring underneath it. It sounds the same and it is a legitimate grip, not a shortcut. The barre at the fifth fret is the same chord again in movable form, and it shares its shape with G at the third fret, so learning either one makes the other nearly free.",
+      "variants": [
+        { "id": "open", "label": "Open position", "shortLabel": "Open", "badge": "Most common",
+          "summary": "Three fingers in one fret. Keep them arched so the open high E rings clearly underneath.",
+          "positions": [-1, 0, 2, 2, 2, 0], "fingers": [0, 0, 1, 2, 3, 0], "barre": null, "startFret": 1,
+          "bestFor": "All players" },
+        { "id": "one-finger", "label": "One-finger A", "shortLabel": "One-finger", "badge": "For small hands",
+          "summary": "Flatten the ring finger across three strings. Same notes, far less crowding, and the open high E still rings.",
+          "positions": [-1, 0, 2, 2, 2, 0], "fingers": [0, 0, 3, 3, 3, 0],
+          "barre": { "fret": 2, "fromString": 4, "toString": 2, "finger": 3 }, "startFret": 1,
+          "bestFor": "Small hands" },
+        { "id": "barre-fifth-fret", "label": "Barre at 5th fret", "shortLabel": "5th-fret barre", "badge": "Movable shape",
+          "summary": "The E shape moved up five frets. It is the same grip as the third-fret G, so one of them teaches you the other.",
+          "positions": [5, 7, 7, 6, 5, 5], "fingers": [1, 3, 4, 2, 1, 1],
+          "barre": { "fret": 5, "fromString": 6, "toString": 1, "finger": 1 }, "startFret": 5,
+          "bestFor": "Moving up the neck" }
+      ]
+    },
+    {
+      "id": "a-minor", "name": "Am", "full": "A minor", "root": "A", "quality": "minor",
+      "notes": ["A", "C", "E"], "primaryVariant": "open",
+      "variants": [
+        { "id": "open", "label": "Open position", "shortLabel": "Open", "badge": "Most common",
+          "summary": "One finger away from E major and two from C. Move between the three and you have most beginner songs covered.",
+          "positions": [-1, 0, 2, 2, 1, 0], "fingers": [0, 0, 2, 3, 1, 0], "barre": null, "startFret": 1,
+          "bestFor": "All players" }
+      ]
+    },
+    {
+      "id": "d-minor", "name": "Dm", "full": "D minor", "root": "D", "quality": "minor",
+      "notes": ["D", "F", "A"], "primaryVariant": "open",
+      "variants": [
+        { "id": "open", "label": "Open position", "shortLabel": "Open", "badge": "Most common",
+          "summary": "The tightest of the open shapes. Curl the index finger well clear of the open D string.",
+          "positions": [-1, -1, 0, 2, 3, 1], "fingers": [0, 0, 0, 2, 3, 1], "barre": null, "startFret": 1,
+          "bestFor": "All players" }
+      ]
+    },
+    {
+      "id": "e-minor", "name": "Em", "full": "E minor", "root": "E", "quality": "minor",
+      "notes": ["E", "G", "B"], "primaryVariant": "open",
+      "variants": [
+        { "id": "open", "label": "Open position", "shortLabel": "Open", "badge": "Easiest chord",
+          "summary": "Two fingers, six ringing strings. The usual first chord, and a safe landing place in any progression.",
+          "positions": [0, 2, 2, 0, 0, 0], "fingers": [0, 2, 3, 0, 0, 0], "barre": null, "startFret": 1,
+          "bestFor": "First chord" }
+      ]
+    },
+    {
+      "id": "f-major", "name": "F", "full": "F major", "root": "F", "quality": "major",
+      "notes": ["F", "A", "C"], "primaryVariant": "barre-first-fret",
+      "variants": [
+        { "id": "barre-first-fret", "label": "Barre at 1st fret", "shortLabel": "Barre", "badge": "Movable shape",
+          "summary": "The first barre most players meet. The index finger presses all six strings at the first fret while the E shape sits on top of it.",
+          "positions": [1, 3, 3, 2, 1, 1], "fingers": [1, 3, 4, 2, 1, 1],
+          "barre": { "fret": 1, "fromString": 6, "toString": 1, "finger": 1 }, "startFret": 1,
+          "bestFor": "Moving up the neck" }
+      ]
+    },
+    {
+      "id": "b-major", "name": "B", "full": "B major", "root": "B", "quality": "major",
+      "notes": ["B", "D#", "F#"], "primaryVariant": "barre-second-fret",
+      "pageUrl": "/chords/b-major/",
+      "metaDescription": "Three printable ways to play the B chord on guitar: the barre at the second fret, the barre at the seventh, and an easy three-string version.",
+      "lead": "Three ways to play B major: the A-shape barre at the second fret, the E-shape barre at the seventh, and a three-string version you can use while the barre is still coming together.",
+      "intro": "B major has no open shape, which is why it stops so many players in their first year. The usual answer is the A-shape barre at the second fret, where the index finger covers five strings and three more fingers crowd into the fourth fret. It is genuinely hard early on. The three-string version is the honest workaround: it holds the same three notes, sits in a song without sounding wrong, and keeps you playing while the barre strength arrives. The E-shape barre at the seventh fret is often easier than the second-fret grip, because the frets are closer together further up the neck.",
+      "variants": [
+        { "id": "barre-second-fret", "label": "Barre at 2nd fret", "shortLabel": "2nd-fret barre", "badge": "Most common",
+          "summary": "The A shape barred at the second fret. Roll the index finger onto its side so the high E stays clear.",
+          "positions": [-1, 2, 4, 4, 4, 2], "fingers": [0, 1, 2, 3, 4, 1],
+          "barre": { "fret": 2, "fromString": 5, "toString": 1, "finger": 1 }, "startFret": 1,
+          "bestFor": "All players" },
+        { "id": "barre-seventh-fret", "label": "Barre at 7th fret", "shortLabel": "7th-fret barre", "badge": "Often easier",
+          "summary": "The E shape at the seventh fret. The frets are narrower up here, so the stretch is smaller than at the second fret.",
+          "positions": [7, 9, 9, 8, 7, 7], "fingers": [1, 3, 4, 2, 1, 1],
+          "barre": { "fret": 7, "fromString": 6, "toString": 1, "finger": 1 }, "startFret": 7,
+          "bestFor": "Full sound without the stretch" },
+        { "id": "three-string", "label": "Three-string B", "shortLabel": "Three-string", "badge": "No barre",
+          "summary": "The same three notes on the top three strings. Use it in songs while your barre strength is still building.",
+          "positions": [-1, -1, -1, 4, 4, 2], "fingers": [0, 0, 0, 2, 3, 1], "barre": null, "startFret": 1,
+          "bestFor": "Beginners" }
+      ]
+    },
+    {
+      "id": "b-minor", "name": "Bm", "full": "B minor", "root": "B", "quality": "minor",
+      "notes": ["B", "D", "F#"], "primaryVariant": "barre-second-fret",
+      "pageUrl": "/chords/b-minor/",
+      "metaDescription": "Three printable ways to play the Bm chord on guitar: the barre at the second fret, the barre at the seventh, and a no-barre three-string shape.",
+      "lead": "Three ways to play B minor: the A-minor-shape barre at the second fret, the E-minor-shape barre at the seventh, and a three-string version for songs you want to play today.",
+      "intro": "B minor is the chord that ends a lot of beginner sessions early. There is no open shape, so the standard grip is the A-minor shape barred at the second fret: index across five strings, ring and little finger in the fourth fret, middle finger in the third. Everything has to arrive at once, and it usually takes a few weeks. The three-string version holds the same three notes and lets you keep the song going in the meantime. Further up the neck the E-minor-shape barre at the seventh fret is often the easier of the two full grips, because the fret spacing is tighter.",
+      "variants": [
+        { "id": "barre-second-fret", "label": "Barre at 2nd fret", "shortLabel": "2nd-fret barre", "badge": "Most common",
+          "summary": "The A minor shape barred at the second fret. The low E string stays out of the chord.",
+          "positions": [-1, 2, 4, 4, 3, 2], "fingers": [0, 1, 3, 4, 2, 1],
+          "barre": { "fret": 2, "fromString": 5, "toString": 1, "finger": 1 }, "startFret": 1,
+          "bestFor": "All players" },
+        { "id": "barre-seventh-fret", "label": "Barre at 7th fret", "shortLabel": "7th-fret barre", "badge": "Often easier",
+          "summary": "The E minor shape at the seventh fret. Only three fingers are involved and the frets are narrower.",
+          "positions": [7, 9, 9, 7, 7, 7], "fingers": [1, 3, 4, 1, 1, 1],
+          "barre": { "fret": 7, "fromString": 6, "toString": 1, "finger": 1 }, "startFret": 7,
+          "bestFor": "Full sound without the stretch" },
+        { "id": "three-string", "label": "Three-string Bm", "shortLabel": "Three-string", "badge": "No barre",
+          "summary": "The same three notes on the top three strings, one finger per string. Enough to keep a song moving.",
+          "positions": [-1, -1, -1, 4, 3, 2], "fingers": [0, 0, 0, 3, 2, 1], "barre": null, "startFret": 1,
+          "bestFor": "Beginners" }
+      ]
+    },
+    {
+      "id": "e5", "name": "E5", "full": "E power chord", "root": "E", "quality": "power",
+      "notes": ["E", "B"], "primaryVariant": "open",
+      "variants": [
+        { "id": "open", "label": "Open position", "shortLabel": "Open", "badge": "Easiest",
+          "summary": "Two fingers and the open low E. The one power chord you can play in your first hour.",
+          "positions": [0, 2, 2, -1, -1, -1], "fingers": [0, 1, 2, 0, 0, 0], "barre": null, "startFret": 1,
+          "bestFor": "First power chord" }
+      ]
+    },
+    {
+      "id": "a5", "name": "A5", "full": "A power chord", "root": "A", "quality": "power",
+      "notes": ["A", "E"], "primaryVariant": "open",
+      "variants": [
+        { "id": "open", "label": "Open position", "shortLabel": "Open", "badge": "Easiest",
+          "summary": "The same grip as E5 moved down a string, with the open A ringing underneath.",
+          "positions": [-1, 0, 2, 2, -1, -1], "fingers": [0, 0, 1, 2, 0, 0], "barre": null, "startFret": 1,
+          "bestFor": "First power chord" }
+      ]
+    },
+    {
+      "id": "d5", "name": "D5", "full": "D power chord", "root": "D", "quality": "power",
+      "notes": ["D", "A"], "primaryVariant": "open",
+      "variants": [
+        { "id": "open", "label": "Open position", "shortLabel": "Open", "badge": "Easiest",
+          "summary": "Rooted on the open D string. Keep the strum tight to the middle of the neck.",
+          "positions": [-1, -1, 0, 2, 3, -1], "fingers": [0, 0, 0, 1, 3, 0], "barre": null, "startFret": 1,
+          "bestFor": "First power chord" }
+      ]
+    },
+    {
+      "id": "f5", "name": "F5", "full": "F power chord", "root": "F", "quality": "power",
+      "notes": ["F", "C"], "primaryVariant": "sixth-string-root",
+      "variants": [
+        { "id": "sixth-string-root", "label": "Root on the 6th string", "shortLabel": "6th-string root", "badge": "Movable shape",
+          "summary": "The shape that moves. Slide it up the neck and the root on the low E string names the chord.",
+          "positions": [1, 3, 3, -1, -1, -1], "fingers": [1, 3, 4, 0, 0, 0], "barre": null, "startFret": 1,
+          "bestFor": "Moving up the neck" }
+      ]
+    },
+    {
+      "id": "g5", "name": "G5", "full": "G power chord", "root": "G", "quality": "power",
+      "notes": ["G", "D"], "primaryVariant": "sixth-string-root",
+      "variants": [
+        { "id": "sixth-string-root", "label": "Root on the 6th string", "shortLabel": "6th-string root", "badge": "Movable shape",
+          "summary": "The F5 shape two frets higher. Every fret you move it is another chord you already know.",
+          "positions": [3, 5, 5, -1, -1, -1], "fingers": [1, 3, 4, 0, 0, 0], "barre": null, "startFret": 3,
+          "bestFor": "Moving up the neck" }
+      ]
+    },
+    {
+      "id": "b5", "name": "B5", "full": "B power chord", "root": "B", "quality": "power",
+      "notes": ["B", "F#"], "primaryVariant": "fifth-string-root",
+      "variants": [
+        { "id": "fifth-string-root", "label": "Root on the 5th string", "shortLabel": "5th-string root", "badge": "Movable shape",
+          "summary": "The second movable shape, rooted on the A string. Mute the low E with the side of your index finger.",
+          "positions": [-1, 2, 4, 4, -1, -1], "fingers": [0, 1, 3, 4, 0, 0], "barre": null, "startFret": 1,
+          "bestFor": "Moving up the neck" }
+      ]
+    },
+    {
+      "id": "c5", "name": "C5", "full": "C power chord", "root": "C", "quality": "power",
+      "notes": ["C", "G"], "primaryVariant": "fifth-string-root",
+      "variants": [
+        { "id": "fifth-string-root", "label": "Root on the 5th string", "shortLabel": "5th-string root", "badge": "Movable shape",
+          "summary": "The B5 shape moved up one fret. Two shapes and the fret numbers cover every power chord there is.",
+          "positions": [-1, 3, 5, 5, -1, -1], "fingers": [0, 1, 3, 4, 0, 0], "barre": null, "startFret": 3,
+          "bestFor": "Moving up the neck" }
+      ]
+    },
+    {
+      "id": "d5-fifth-fret", "name": "D5 (5th fret)", "full": "D power chord at the 5th fret", "root": "D", "quality": "power",
+      "notes": ["D", "A"], "primaryVariant": "fifth-string-root",
+      "variants": [
+        { "id": "fifth-string-root", "label": "Root on the 5th string", "shortLabel": "5th-string root", "badge": "Movable shape",
+          "summary": "The same D as the open shape, played higher up where it sits better under distortion.",
+          "positions": [-1, 5, 7, 7, -1, -1], "fingers": [0, 1, 3, 4, 0, 0], "barre": null, "startFret": 5,
+          "bestFor": "Heavier tone" }
+      ]
+    },
+    {
+      "id": "b-dominant-7", "name": "B7", "full": "B dominant 7", "root": "B", "quality": "dominant 7",
+      "notes": ["B", "D#", "F#", "A"], "primaryVariant": "open",
+      "variants": [
+        { "id": "open", "label": "Open position", "shortLabel": "Open", "badge": "Most common",
+          "summary": "Four fingers, but no barre. In a lot of songs it stands in for B major while the barre is still coming.",
+          "positions": [-1, 2, 1, 2, 0, 2], "fingers": [0, 2, 1, 3, 0, 4], "barre": null, "startFret": 1,
+          "bestFor": "Standing in for B" }
+      ]
+    },
+    {
+      "id": "d-dominant-7", "name": "D7", "full": "D dominant 7", "root": "D", "quality": "dominant 7",
+      "notes": ["D", "F#", "A", "C"], "primaryVariant": "open",
+      "variants": [
+        { "id": "open", "label": "Open position", "shortLabel": "Open", "badge": "Most common",
+          "summary": "A small change from open D that pulls the ear towards G. Common at the end of a line in blues and folk.",
+          "positions": [-1, -1, 0, 2, 1, 2], "fingers": [0, 0, 0, 2, 1, 3], "barre": null, "startFret": 1,
+          "bestFor": "Leading back to G" }
+      ]
+    }
+  ]
+}

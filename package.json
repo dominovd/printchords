@@ -1,0 +1,22 @@
+{
+  "name": "printchords",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "assets": "node scripts/validate-chords.mjs && node scripts/generate-images.mjs",
+    "predev": "npm run assets",
+    "dev": "astro dev",
+    "prebuild": "npm run assets",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "node scripts/validate-chords.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "@resvg/resvg-js": "^2.6.2",
+    "astro": "^5.16.2",
+    "pdfkit": "^0.19.1"
+  }
+}

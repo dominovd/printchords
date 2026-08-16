@@ -1,0 +1,60 @@
+---
+/**
+ * About, contact, terms and privacy. Text only, so they carry no printable
+ * sheet and no FAQ block.
+ */
+import Base from '../layouts/Base.astro';
+import { getSitePage, sitePageUrl, CONTACT_EMAIL } from '../data/site-pages.mjs';
+import { SITE, absolute } from '../lib/site.mjs';
+
+const page = getSitePage(Astro.props.id);
+const url = sitePageUrl(page);
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': page.id === 'contact' ? 'ContactPage' : page.id === 'about' ? 'AboutPage' : 'WebPage',
+    '@id': `${absolute(url)}#webpage`,
+    name: page.title,
+    url: absolute(url),
+    description: page.metaDescription,
+    inLanguage: 'en',
+    isPartOf: { '@id': `${SITE.origin}/#website` },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: absolute('/') },
+      { '@type': 'ListItem', position: 2, name: page.title, item: absolute(url) },
+    ],
+  },
+];
+---
+
+<Base
+  title={page.metaTitle}
+  description={page.metaDescription}
+  canonical={url}
+  schema={schema}
+>
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">Home</a><span>›</span>
+    <span aria-current="page">{page.title}</span>
+  </nav>
+
+  <h1>{page.title}</h1>
+  <p class="lead">{page.lead}</p>
+
+  <div class="text-page">
+    {page.sections.map((section) => (
+      <section>
+        <h2>{section.heading}</h2>
+        {section.body.map((paragraph) => <p>{paragraph}</p>)}
+      </section>
+    ))}
+    <p class="text-page__contact">
+      <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+    </p>
+  </div>
+</Base>

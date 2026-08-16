@@ -1,0 +1,8 @@
+---
+// The head term sits on the root: it is the URL people type, link and pin, and
+// a redirect would spend that on a hop. There is no /guitar-chord-chart/.
+import ChartPage from '../components/ChartPage.astro';
+import { rootChart } from '../data/charts.mjs';
+---
+
+<ChartPage chart={rootChart} />
