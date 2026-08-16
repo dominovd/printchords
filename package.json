@@ -16,6 +16,7 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
     "@resvg/resvg-js": "^2.6.2",
+    "@vercel/analytics": "^2.0.1",
     "astro": "^5.16.2",
     "pdfkit": "^0.19.1"
   }

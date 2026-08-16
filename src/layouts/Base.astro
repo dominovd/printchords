@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Analytics from '@vercel/analytics/astro';
 import { SITE, absolute } from '../lib/site.mjs';
 
 const {
@@ -25,6 +26,7 @@ const ogImageUrl = ogImage ? absolute(ogImage) : null;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
+    <meta name="google-site-verification" content="0bMzaOsFfzS6ZcN_HfjsoMtzkq0H8wcP3bxqaKhOKAA" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.name} />
@@ -48,6 +50,12 @@ const ogImageUrl = ogImage ? absolute(ogImage) : null;
     {schema.map((block) => (
       <script type="application/ld+json" set:html={JSON.stringify(block)} />
     ))}
+
+    {/* Vercel Web Analytics only. Speed Insights is a separate package and is
+        deliberately not installed. Cookieless: visitors are identified by a hash
+        of the request that is discarded after 24 hours, so the privacy page can
+        still say the site sets no cookies. */}
+    <Analytics />
   </head>
   <body>
     <Header />

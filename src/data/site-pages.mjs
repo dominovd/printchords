@@ -1,9 +1,10 @@
 /**
  * About, contact and the two legal pages.
  *
- * Plain factual text describing what the site actually does today. If analytics,
- * ads or an email list are ever added, the privacy page has to be updated in the
- * same commit, because it currently states that none of them exist.
+ * Plain factual text describing what the site actually does today. The privacy
+ * page makes concrete claims - no cookies, no ads, cookieless page counting -
+ * so anything added to the site that touches visitor data has to be reflected
+ * here in the same commit or the page becomes untrue.
  */
 import { SITE } from '../lib/site.mjs';
 
@@ -113,8 +114,8 @@ export const sitePages = [
     title: 'Privacy',
     metaTitle: 'Privacy: PrintChords',
     metaDescription:
-      'What PrintChords does with your data: no accounts, no sign-up, no tracking cookies, and nothing you type ever leaves your browser.',
-    lead: 'There is nothing to sign up for, so there is almost nothing to collect.',
+      'What PrintChords does with your data: no accounts, no sign-up, no cookies, and page-view statistics that cannot identify anyone.',
+    lead: 'No accounts, no cookies, and page counts that cannot identify anyone.',
     sections: [
       {
         heading: 'What the site collects',
@@ -126,7 +127,14 @@ export const sitePages = [
       {
         heading: 'Cookies',
         body: [
-          `${SITE.domain} sets no cookies and uses no local storage. There is no analytics script and no advertising script on the site as it stands. If that ever changes, this page changes with it, in the same release.`,
+          `${SITE.domain} sets no cookies and uses no local storage, and there is no advertising anywhere on the site.`,
+        ],
+      },
+      {
+        heading: 'Visitor statistics',
+        body: [
+          'The site uses Vercel Web Analytics to count page views. It does not use cookies and it does not follow anyone between sites. Visitors are identified by a hash made from the request itself, and that is discarded after 24 hours, so there is no way to reconstruct a browsing session or to connect two visits to the same person.',
+          'What is recorded with each page view is the page address, where the visit came from, an approximate location no finer than a city, and the browser, operating system and device type. That is the whole list. It exists to answer one question: which sheets people actually print.',
         ],
       },
       {
