@@ -18,6 +18,7 @@ import { KEYS, SCALES } from '../src/lib/scales.mjs';
 import { boxesImagePath, boxesSheetSvg, scaleImagePath, scaleSheetSvg } from '../src/lib/scale-sheets.mjs';
 import { pdfPath } from '../src/lib/assets.mjs';
 import { svgToPdf } from './svg-to-pdf.mjs';
+import { pngsToIco } from './make-ico.mjs';
 import { blankSheetSvg, chartSheetSvg, printableCardSvg, PRINT_WIDTH } from '../src/lib/diagram.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -97,14 +98,24 @@ for (const key of KEYS) {
 
 // Site icons, rendered from the same favicon.svg the browser gets.
 const faviconSvg = await readFile(join(publicDir, 'favicon.svg'), 'utf8');
-for (const [size, name] of [[96, 'favicon-96.png'], [180, 'apple-touch-icon.png']]) {
-  const icon = new Resvg(faviconSvg, {
+const renderIcon = (size) =>
+  new Resvg(faviconSvg, {
     fitTo: { mode: 'width', value: size },
     font: { fontFiles, loadSystemFonts: false, defaultFontFamily: 'Inter' },
-  });
-  await writeFile(join(publicDir, name), icon.render().asPng());
+  }).render().asPng();
+
+for (const [size, name] of [[96, 'favicon-96.png'], [180, 'apple-touch-icon.png']]) {
+  await writeFile(join(publicDir, name), renderIcon(size));
   written.push(`/${name}`);
 }
+
+// Plus the root .ico, which browsers and crawlers ask for whether it is
+// declared or not.
+await writeFile(
+  join(publicDir, 'favicon.ico'),
+  pngsToIco([16, 32, 48].map((size) => ({ size, data: renderIcon(size) })))
+);
+written.push('/favicon.ico');
 
 if (!quiet) console.log(`  ok    ${written.length} generated assets in public/`);
   return written;
